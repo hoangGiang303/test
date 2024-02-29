@@ -1,41 +1,44 @@
 #include <iostream>
-#include <fstream>
+#include <list>
+#include <string>
 using namespace std;
-
 int main() {
-   ifstream inFile;
-   int number;
+    string str,str1;
+    list<string> list, uniqueList;
+    cout<<"Nhap chuoi: ";
+    cin>>str;
+ 
+    for (int i = 0; i < str.length() - 1; ++i) {
+        string currentChar = str.substr(i,1);
+        string nextChar = str.substr(i+1,2);
+        if(nextChar == "aw" || nextChar == "aa"||
+        nextChar == "dd" || nextChar == "ee" ||
+        nextChar == "oo" || nextChar == "ow"
+        ){
+            list.push_back(nextChar);
+        }
+        else if(currentChar == "w"){
+            list.push_back(currentChar);
+        }
+    }
+    
+    for (const string& value : list) {
+        bool exists = false;
+        for (const string& uniqueValue : uniqueList) {
+            if (uniqueValue == value) {
+                exists = true;
+                break;
+            }
+        }
 
-   // Open the input file
-   inFile.open("input.txt");
-
-   // Check if the file is open
-   if (inFile.is_open()) {
-       // Read the value of number from the input file
-       inFile >> number;
-
-       // Close the input file
-       inFile.close();
-
-       // Print the value of number
-       cout << "Number: " << number << endl;
-
-       // Update the value of number
-       number += 10;
-
-       // Open the output file
-       ofstream outFile;
-       outFile.open("input.txt");
-
-       // Check if the file is open
-       if (outFile.is_open()) {
-           // Write the updated value of number to the output file
-           outFile << number;
-
-           // Close the output file
-           outFile.close();
-       }
-   }
-
-   return 0;
+        if (!exists) {
+            uniqueList.push_back(value);
+        }
+    }
+    cout<<uniqueList.size()<<" ";
+    
+    for (const string& lists : uniqueList) {
+        cout <<lists<<",";
+    }
+    return 0;
 }
